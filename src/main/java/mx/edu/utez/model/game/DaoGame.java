@@ -1,10 +1,12 @@
 package mx.edu.utez.model.game;
 
+import jdk.internal.util.xml.impl.Input;
 import mx.edu.utez.model.category.BeanCategory;
 import mx.edu.utez.service.ConnectionMySQL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.InputStream;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -81,13 +83,13 @@ public class DaoGame {
         return game;
     }
 
-    public boolean create(BeanGame game){
+    public boolean create(BeanGame game, InputStream image){
         boolean flag = false;
         try{
             con = ConnectionMySQL.getConnection();
             cstm = con.prepareCall("{call registergame(?,?,?,?,?)}");
             cstm.setString(1, game.getNameGame());
-            cstm.setString(2, game.getImg_game());
+            cstm.setBlob(2,image);
             cstm.setInt(3, game.getCategory_idCategory().getIdCategory());
             cstm.setString(4, game.getDatePremiere());
             cstm.setString(5, game.getStatus());
