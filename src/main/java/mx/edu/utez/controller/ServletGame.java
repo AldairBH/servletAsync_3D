@@ -71,6 +71,7 @@ public class ServletGame extends HttpServlet {
                 beanGame.setIdGame(Integer.parseInt("IdGame"));
                 beanGame.setNameGame(request.getParameter("name"));
                 beanGame.setDatePremiere(request.getParameter("date"));
+                beanGame.setStatus(request.getParameter("status"));
                 beanGame.setCategory_idCategory(beanCategory);
 
                 boolean flag1 = daoGame.update(beanGame);
