@@ -1,41 +1,7 @@
-var abrir = document.getElementById('btn-registar');
-var abrir2 = document.getElementsByClassName('btn-modificar');
-var abrir3 = document.getElementsByClassName('btn-eliminar');
-const cancelButton2 = document.getElementById('cerrar1');
-const cancelButton3 = document.getElementById('cerrar2');
-const cancelButton = document.getElementById('cerrar');
-const dialogoregistrar = document.getElementById('Registrar');
-const dialogomodificar = document.getElementById('Modificar');
-const dialogoeliminar = document.getElementById('Eliminar');
+var ver = document.getElementById('btn-registar');
+const agregar = document.getElementById('Registrar');
+const cerrar = document.getElementById('cerrar');
 
-
-(function() {
-
-
-    abrir.addEventListener('click', function() {
-        dialogoregistrar.showModal();
-    });
-
-    for(let i=0; i < abrir2.length; i++){
-
-        cargarmodal(abrir2[i]);
-    }
-
-    for(let x=0; x< abrir3.length; x++){
-        cargarmodal2(abrir3[x]);
-    }
-    cancelButton.addEventListener('click', function() {
-        dialogoregistrar.close();
-    });
-
-    cancelButton2.addEventListener('click', function() {
-        dialogomodificar.close();
-    });
-    cancelButton3.addEventListener('click', function() {
-        dialogoeliminar.close();
-    });
-
-})();
 
 const fill = (list) => {
     let table = "";
@@ -46,8 +12,9 @@ const fill = (list) => {
 			<tr>
 				<td>${ i + 1 }</td>
 				<td>${list[i].nameGame}</td>
+				<td><img src="data:image/jpeg;base64,${list[i].imgGame}"></td>				
+				<td>${list[i].Category_idCategory.nameCategory}</td>
 				<td>${list[i].datePremiere}</td>
-				<td><img src="data:image/jpeg;base64,${list[i].imgGame}"></td>
 				<td>${list[i].status ? "Activo" : "Inactivo"}</td>
 				<td>
 					<button type="button" class="btn btn-info">Ver</button>
@@ -67,6 +34,19 @@ const fill = (list) => {
     $(`#container > tbody`).html(table);
 };
 
+const registrar = (json) =>{
+    const contextPath = window.location.origin + window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
+
+    $.ajax({
+        type: 'POST',
+        url: contextPath + '/createGame?action=create',
+        data: {cat: json },
+        success: function(){
+            findAll();
+        }
+    });
+}
+
 const findAll = () => {
     const contextPath = window.location.origin + window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
 
@@ -78,40 +58,30 @@ const findAll = () => {
         fill(res.listGames);
     });
 };
-
 findAll();
 
-function cargarmodal(boton){
-
-    boton.onclick = function(){
-
-        let id = $(this).attr('data-id');
-        let name = $(this).attr('data-name');
-        let image = $(this).attr('data-image');
-        let Idcategory = $(this).attr('data-category');
-        let date = $(this).attr('data-date');
-        let status = $(this).attr('data-status');
-
-        $('#IdGame').val(id);
-        $('#name').val(name);
-        $('#image').val(image);
-        $('#Idcategory').val(Idcategory);
-        $('#date').val(date);
-        $('#status').val(status);
-
-        dialogomodificar.showModal();
+(function() {
+    ver.addEventListener('click', function() {
+        agregar.showModal();
+    });
+    cerrar.addEventListener('click', function() {
+        agregar.close();
+    });
 
 
-    }
-}
+})();
 
-function  cargarmodal2(boton2) {
-    boton2.onclick = function(){
-        let id = $(this).attr('data-id');
-        let name = $(this).attr('data-name');;
 
-        $('#IdGame').val(id);
-        $('#name').val(name);
-        dialogoeliminar.showModal();
-    }
-}
+$('#datos').submit(function () {
+    var obj = {
+        nameGame: $('nameGame').val(),
+        imgGame: $('imgGame').val(),
+        idCategory: $('idCategory').val(),
+        datePremiere: $('datePremiere').val(),
+        status: $('status').val()
+    };
+
+    registrar(JSON.stringify(obj));
+
+});
+

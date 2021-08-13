@@ -33,11 +33,9 @@ public class DaoGame {
                 BeanGame beanGame = new BeanGame();
                 BeanCategory beanCategory = new BeanCategory();
 
-                beanGame.setImg_game(Base64.getEncoder().encodeToString(rs.getBytes("imgGame")));
-
                 beanGame.setIdGame(rs.getInt("idGame"));
                 beanGame.setNameGame(rs.getString("nameGame"));
-                beanGame.setImg_game(rs.getString("img_game"));
+                beanGame.setImg_game(Base64.getEncoder().encodeToString(rs.getBytes("imgGame")));
                 beanCategory.setIdCategory(rs.getInt("idCategory"));
                 beanGame.setDatePremiere(rs.getString("datePremiere"));
                 beanGame.setStatus(rs.getString("status"));
@@ -68,7 +66,7 @@ public class DaoGame {
 
                 beanGame.setIdGame(rs.getInt("idGame"));
                 beanGame.setNameGame(rs.getString("nameGame"));
-                beanGame.setImg_game(rs.getString("img_game"));
+                beanGame.setImg_game(Base64.getEncoder().encodeToString(rs.getBytes("imgGame")));
                 beanCategory.setIdCategory(rs.getInt("idCategory"));
                 beanGame.setDatePremiere(rs.getString("datePremiere"));
                 beanGame.setStatus(rs.getString("status"));

@@ -13,6 +13,17 @@
     outline: none;
      margin-left: 35%;
 }
-.fondito{
-    background-color: khaki;
+* {
+
+    box-sizing: border-box;
+    list-style-type: none;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    transition:all .3s;
+}
+
+body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
